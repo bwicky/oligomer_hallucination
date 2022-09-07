@@ -2,6 +2,7 @@ Oligomer and Multi-State design using AlphaFold2 MCMC hallucination.
 ====================================================================================
 <bwicky@uw.edu> 
 <lmilles@uw.edu> 
+<acourbet@uw.edu>
 
 Summary
 -------
