@@ -81,7 +81,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 - A file (.out) containing the scores at each step of the MCMC trajectory (accepted and rejected).
 
 ## Citing this work
----
+
 If you use the code, please cite:
 
 ```bibtex
