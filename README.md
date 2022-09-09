@@ -6,10 +6,9 @@ Accompanying [oligomer hallucination paper](https://www.biorxiv.org/content/10.1
 
 The [ProteinMPNN paper](https://www.biorxiv.org/content/10.1101/2022.06.03.494563v1) and [code](https://github.com/dauparas/ProteinMPNN)
 
-You will need to have [AlphaFold2](https://github.com/deepmind/alphafold) installed.
+To run the code, clone this repository, as well as [AlphaFold2](https://github.com/deepmind/alphafold) and install the correct conda environment using the SE3.yml file provided.
 
-To see all options: `./oligomer_hallucination.py -h`
-
+Use `./oligomer_hallucination.py -h` to see all options.
 
 ## Summary
 
