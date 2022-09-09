@@ -1,13 +1,11 @@
 ![header](imgs/oligo_hallucination.png)
 
 # Oligomer and multi-state hallucination with AlphaFold2
----
 
 Accompanying [oligomer hallucination paper](https://www.biorxiv.org/content/10.1101/2022.06.09.493773v1) and [ProteinMPNN paper](https://www.biorxiv.org/content/10.1101/2022.06.03.494563v1)
 
 
 ## Summary
----
 
 - Designs (hallucinations) are performed by MCMC searches in sequence space and optimizing (user-defined) losses composed of AlphaFold2 metrics, and/or geometric constraints, and/or secondary-structure definitions.
 - Oligomers with arbitrary number of subunits can be designed.
@@ -38,13 +36,11 @@ Accompanying [oligomer hallucination paper](https://www.biorxiv.org/content/10.1
 
 
 ## Minimal inputs
----
 
 - The number and type of subunits for each oligomer, also indicating whether it is a positive or negative design task.
 - The length of each protomer or one seed sequence per protomer.
 
 ## Examples
----
 
 - `./AF2_multistate_hallucination.py --oligo AAAAAA+ --L 30 --loss dual_cyclic --out C6` 
 
@@ -54,7 +50,6 @@ will perform design of an oligomeric assembly six protomers in C6 symmetry, each
 will perform single-state design of a monomeric repeat proteins containing six repeats, each 30 amino-acids in length.
 
 ## Example `.af2h` file
----
 
 The following config file enables design at all positions set to 1 (equal probability of picking those sites for mutation), and disallow design at all positions that are set to 0.
 ```
@@ -67,7 +62,6 @@ QEELAELIELILEVNEWLQRWEEEGLKDSEELVKEYEKIVEKIKELVKMAEEGHDEEEAEEEAKKLKKKAEEILREAEKG
 ```
 
 ## Example template alignment for tmalign loss
----
 
 Remove the `TER` in the template pdbfiles. `model1` (do not change the names) is the template given in `--template`, and `model2` should have the length of the protomer to be designed. The example below will design a 130 amino acid protein with motifs placed at the N- and C-termini (the sequence given here is arbitrary). Do not change this order!
 
@@ -82,7 +76,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 ```
 
 ## Outputs
----
 
 - PDB structures for each accepted move of the MCMC trajectory.
 - A file (.out) containing the scores at each step of the MCMC trajectory (accepted and rejected).
@@ -103,7 +96,7 @@ If you use the code, please cite:
 ```
 
 ## Acknowledgements
----
+
 This work was made possible by the following separate libraries and packages:
 
 *   [AlphaFold2](https://github.com/deepmind/alphafold)
@@ -123,7 +116,6 @@ This work was made possible by the following separate libraries and packages:
 We thank all their contributors and maintainers!
 
 ## Get in touch
----
 
 Questions and comments are welcome:
 
