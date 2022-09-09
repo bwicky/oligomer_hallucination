@@ -2,7 +2,13 @@
 
 # Oligomer and multi-state hallucination with AlphaFold2
 
-Accompanying [oligomer hallucination paper](https://www.biorxiv.org/content/10.1101/2022.06.09.493773v1) and [ProteinMPNN paper](https://www.biorxiv.org/content/10.1101/2022.06.03.494563v1)
+Accompanying [oligomer hallucination paper](https://www.biorxiv.org/content/10.1101/2022.06.09.493773v1) 
+
+The [ProteinMPNN paper](https://www.biorxiv.org/content/10.1101/2022.06.03.494563v1) and [code](https://github.com/dauparas/ProteinMPNN)
+
+You will need to have [AlphaFold2](https://github.com/deepmind/alphafold) installed.
+
+To see all options: `./oligomer_hallucination.py -h`
 
 
 ## Summary
@@ -42,10 +48,10 @@ Accompanying [oligomer hallucination paper](https://www.biorxiv.org/content/10.1
 
 ## Examples
 
-- `./AF2_multistate_hallucination.py --oligo AAAAAA+ --L 30 --loss dual_cyclic --out C6` 
+- `./oligomer_hallucination.py --oligo AAAAAA+ --L 30 --loss dual_cyclic --out C6` 
 
 will perform design of an oligomeric assembly six protomers in C6 symmetry, each 30 amino-acids in length.
-- `./AF2_multistate_hallucination.py --oligo AAAAAA+ --L 30 --single_chains` 
+- `./oligomer_hallucination.py --oligo AAAAAA+ --L 30 --single_chains` 
 
 will perform single-state design of a monomeric repeat proteins containing six repeats, each 30 amino-acids in length.
 
