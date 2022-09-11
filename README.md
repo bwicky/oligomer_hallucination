@@ -4,56 +4,33 @@
 
 Design (hallucinate) cyclic-symmetric protein assemblies starting from only a specification of their homo-oligomeric valencies.
 
-Accompanying [oligomer hallucination paper](https://www.biorxiv.org/content/10.1101/2022.06.09.493773v1) 
+Accompanying [oligomer hallucination paper](https://www.biorxiv.org/content/10.1101/2022.06.09.493773v1).
 
-The [ProteinMPNN paper](https://www.biorxiv.org/content/10.1101/2022.06.03.494563v1) and [code](https://github.com/dauparas/ProteinMPNN)
+`HAL_design_models` contains models for each design that was experimentally tested.
 
+`HAL_experimental` contains data about each deign that was experimentally tested.
 
-## Features
+The [ProteinMPNN paper](https://www.biorxiv.org/content/10.1101/2022.06.03.494563v1) and [code](https://github.com/dauparas/ProteinMPNN).
 
-- Designs (hallucinations) are performed by MCMC searches in sequence space and optimizing (user-defined) losses composed of AlphaFold2 metrics, and/or geometric constraints, and/or secondary-structure definitions.
-- Oligomers with arbitrary number of subunits can be designed.
-- Multistate design (either positive or negative) can be specified.
-- MCMC trajectories can either be seeded with input sequence(s), or started randomly (using a frequency-adjusted AA distribution).
-- At each step, position(s) are chosen for mutation based on different options (see `modules/mutations.py` for details).
-- A 'resfile' (`.af2h` extension) can be employed to specify designable positions and associated probabilities of mutation.
-- The oligomeric state (number of subunits) for each oligomer (state) can be specified.
-- Repeat proteins (sequence-symmetric monomers) can be designed instead of oligomers by passing the `--single_chains` flag. 
-- Specific amino acids can be exluded.
-- MCMC paramters (initial temperature, annealing half-life, steps, tolerance) can be specified.
-- Currently implemented loss functions are (see `modules/losses.py` for details):
-  - `plddt`: plDDT seem to have trouble converging to complex formation.
-  - `ptm`: pTM tends to 'melt' input structures.
-  - `pae`: similar to result as ptm?
-  - `dual`: combination of plddt and ptm losses with equal weights.
-  - `entropy`: current implementation unlikely to work.
-  - `pae_sub_mat`: initially implemented to enforce symmetry, but probably not working.
-  - `pae_asym`: this loss has different weights associated with the means of the different PAE sub-matrices (asymmetric weighting of the different inter-chain contacts). Off-diagonal elements (+/-1 from the diagaonl, and opposite corners) have higher weights.
-  - `cyclic`: geometric loss term to enforce cyclic symmetry, minimizes the standard deviation of protomer center of mass distances
-  - `dual_cyclic`: dual with an added geometric loss term to enforce symmetry. 
-  - `frac_dssp`: Enforcing an exact secondary structure percentage (E,H,notEH) as computed by DSSP on the structure.
-  - `min_frac_dssp`: Enforcing a minimum fraction of secondary structure content (E,H,notEH). The loss is minimised if the fraction of that secondary strucure (computed by DSSP on the structure) is larger than specified .
-  - `tmalign`: loss defined as TM-score to template PDB, given with `--template`, alignment of template (`tmalign -I`) can be forced with `--template_alignment [alignment].aln` if template has multiple chains remove the `TER` in the pdbfiles.
-  - `dual_tmalign`: jointly optimises ptm, plddt and tmalign (see above) TM-score.
-  - `pae_asym_tmalign`: in development.
-  - `aspect_ratio`: geometric term that enforces protomers with aspect ratios close to 1 (i.e. spherical and globular).  
+## Get started
 
-
-## Minimal inputs
-
-- The number and type of subunits for each oligomer, also indicating whether it is a positive or negative design task.
-- The length of each protomer or one seed sequence per protomer.
 
 ## Examples
 
-- `./oligomer_hallucination.py --oligo AAAAAA+ --L 30 --loss dual_cyclic --out C6` 
+- `./oligomer_hallucination.py --oligo AAA+ --L 100 --out example`
+will perform design of a homo-trimer, with each protomer being composed of 100 amino acids.
 
-will perform design of an oligomeric assembly six protomers in C6 symmetry, each 30 amino-acids in length.
-- `./oligomer_hallucination.py --oligo AAAAAA+ --L 30 --single_chains` 
+- `./oligomer_hallucination.py --oligo AAAAAA+ --L 50 --loss dual_cyclic --out example` 
 
-will perform single-state design of a monomeric repeat proteins containing six repeats, each 30 amino-acids in length.
+will perform design of a homo-hexamer, with each protomer being composed of 50 amino acids, and optimising for the `dual_cylic` loss.
 
+- `./oligomer_hallucination.py --oligo AAAAAAAA+ --L 30 --single_chains` 
 
+will perform design of a monomeric proteins containing eight repeats, each 30 amino acids in length.
+
+- `./oligomer_hallucination.py --oligo AA+ --seq GDIQVQVNIDDNGKNFDYTYTVTTESELQKVLNELMDYIKKQGAKRVRISITARTKKEAEKFAAILIKVFAELGYNDINVTFDGDTVTVEGQLE`
+
+will perform design of a homo-dimer, starting from the specified sequence.
 
 ## Outputs
 
@@ -63,32 +40,32 @@ will perform single-state design of a monomeric repeat proteins containing six r
 
 ## Features
 
-- Designs (hallucinations) are performed by MCMC searches in sequence space and optimizing (user-defined) losses composed of AlphaFold2 metrics, and/or geometric constraints, and/or secondary-structure definitions.
-- Oligomers with arbitrary number of subunits can be designed.
-- Multistate design (either positive or negative) can be specified.
+Design (hallucination) is performed by MCMC search in sequence space, while optimizing (user-defined) losses composed of AlphaFold2 metrics, and/or geometric constraints, and/or secondary-structure definitions in order to match the design objective:
+
+- Oligomers with arbitrary numbers of subunits can be designed.
+- Multi-state design (either positive or negative) can be specified.
 - MCMC trajectories can either be seeded with input sequence(s), or started randomly (using a frequency-adjusted AA distribution).
-- At each step, position(s) are chosen for mutation based on different options (see `modules/mutations.py` for details).
-- A 'resfile' (`.af2h` extension) can be employed to specify designable positions and associated probabilities of mutation.
-- The oligomeric state (number of subunits) for each oligomer (state) can be specified.
+- At each step, position(s) are chosen for mutation (see `modules/mutations.py` for details about the different options).
+- A configuration file (`.af2h` extension) can be used to specify designable positions and associated probabilities of mutation.
 - Repeat proteins (sequence-symmetric monomers) can be designed instead of oligomers by passing the `--single_chains` flag.
 - Specific amino acids can be exluded.
-- MCMC paramters (initial temperature, annealing half-life, steps, tolerance) can be specified.
+- MCMC paramters (initial temperature, annealing half-life, number of steps, tolerance for termination) can be specified.
 - Currently implemented loss functions are (see `modules/losses.py` for details):
-  - `plddt`: plDDT seem to have trouble converging to complex formation.
-  - `ptm`: pTM tends to 'melt' input structures.
-  - `pae`: similar to result as ptm?
-  - `dual`: combination of plddt and ptm losses with equal weights.
-  - `entropy`: current implementation unlikely to work.
-  - `pae_sub_mat`: initially implemented to enforce symmetry, but probably not working.
-  - `pae_asym`: this loss has different weights associated with the means of the different PAE sub-matrices (asymmetric weighting of the different inter-chain contacts). Off-diagonal elements (+/-1 from the diagaonl, and opposite corners) have higher weights.
-  - `cyclic`: geometric loss term to enforce cyclic symmetry, minimizes the standard deviation of protomer center of mass distances
-  - `dual_cyclic`: dual with an added geometric loss term to enforce symmetry.
-  - `frac_dssp`: Enforcing an exact secondary structure percentage (E,H,notEH) as computed by DSSP on the structure.
-  - `min_frac_dssp`: Enforcing a minimum fraction of secondary structure content (E,H,notEH). The loss is minimised if the fraction of that secondary strucure (computed by DSSP on the structure) is larger than specified .
-  - `tmalign`: loss defined as TM-score to template PDB, given with `--template`, alignment of template (`tmalign -I`) can be forced with `--template_alignment [alignment].aln` if template has multiple chains remove the `TER` in the pdbfiles.
-  - `dual_tmalign`: jointly optimises ptm, plddt and tmalign (see above) TM-score.
-  - `pae_asym_tmalign`: in development.
+  - `plddt`: optimises pLDDT; seems to have trouble converging to assembled structures.
+  - `ptm`: optmimises pTM; tends to 'melt' input structures.
+  - `pae`: optimises pAE; similar to pTM.
+  - `dual`: combination of `plddt` and `ptm` losses with equal weights.
+  - `cyclic`: geometric loss term that enforce cyclic symmetry; minimises the standard deviation of the distances between center of masses of the protomers.
+  - `dual_cyclic`: combination of dual and cyclic losses.
   - `aspect_ratio`: geometric term that enforces protomers with aspect ratios close to 1 (i.e. spherical and globular).
+  - `pae_sub_mat`: initially implemented to enforce symmetry, under-tested.
+  - `pae_asym`: this loss has different weights associated with the means of the different pAE sub-matrices (asymmetric weighting of the different inter-chain contacts). Off-diagonal elements (+/-1 from the diagaonl, and opposite corners) have higher weights.
+  - `frac_dssp`: enforces an exact secondary structure content (`E, H, notEH`), computed by `DSSP` on the structure.
+  - `min_frac_dssp`: enforces a minimum secondary structure content (`E, H, notEH`). The loss is minimal if the fraction of that secondary strucure (computed by `DSSP` on the structure) is larger than specified.
+  - `tmalign`: loss defined as TM-score to a template PDB, given with `--template`. Alignment to the template (`tmalign -I`) can be forced with `--template_alignment [alignment].aln`. If the template has multiple chains, remove the `TER` in the PDB file.
+  - `dual_tmalign`: jointly optimises ptm, plddt and tmalign losses.
+  - `pae_asym_tmalign`: in development.
+  - `entropy`: in development.
 
 
 ## Options
@@ -200,6 +177,7 @@ This work was made possible by the following separate libraries and packages:
 *   [AlphaFold2](https://github.com/deepmind/alphafold)
 *	[RosetTTAfold](https://github.com/RosettaCommons/RoseTTAFold)
 *   [ProteinMPNN](https://github.com/dauparas/ProteinMPNN)
+*	[Rosetta](https://www.rosettacommons.org/software)
 *   [Biopython](https://biopython.org)
 *   [Matplotlib](https://matplotlib.org/)
 *   [Seaborn](https://seaborn.pydata.org/)
@@ -209,6 +187,7 @@ This work was made possible by the following separate libraries and packages:
 *   [SciPy](https://scipy.org)
 *   [Scikit-learn](https://scikit-learn.org/stable/)
 *   [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi)
+*	[PSIPRED](http://bioinf.cs.ucl.ac.uk/psipred/)
 *   [TM-align](https://zhanggroup.org/TM-align/)
 *   [MM-align](https://zhanggroup.org/MM-align/)
 
