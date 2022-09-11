@@ -32,11 +32,16 @@ sed -i 's/\/software\/conda\/envs\/SE3\/bin\/python/\/path\/to\/your\/conda\/env
 
 4. Change paths to your AlphaFold2 install in `./modules/af2_net.py` and `./modules/losses.py`
 ```
-sed -i 's/\/projects\/ml\/alphafold\/alphafold_git\//\/path\/to\/your\/alphafold\/installation\//g' modules/*.py
+sed -i 's/\/projects\/ml\/alphafold\/alphafold_git\//\/path\/to\/your\/alphafold\/installation\//g' ./modules/*.py
 ```
 
 5. If using `tmalign` and `dssp` based losses, you will also need to install these packages ([TM-align](https://zhanggroup.org/TM-align/), [DSSP](https://github.com/PDB-REDO/dssp)), and update the paths to their executables in `./modules/losses.py`
 
+```
+modules/losses.py:    dssp_tuple = dssp_dict_from_pdb_file(pdbfile, DSSP="/home/lmilles/lm_bin/dssp")[0]
+modules/losses.py:        p = subprocess.Popen(f'/home/lmilles/lm_bin/TMalign {template} {temp_pdbfile} | grep -E "RMSD|TM-score=" ', stdout=subprocess.PIPE, shell=True)
+modules/losses.py:        p = subprocess.Popen(f'/home/lmilles/lm_bin/TMalign {template} {temp_pdbfile} -I {force_alignment} | grep -E "RMSD|TM-score=" ', stdout=subprocess.PIPE, shell=True)
+```
 
 ## Examples
 
@@ -54,7 +59,7 @@ will perform design of a monomeric proteins containing eight repeats, each 30 am
 
 - `./oligomer_hallucination.py --oligo AA+ --seq GDIQVQVNIDDNGKNFDYTYTVTTESELQKVLNELMDYIKKQGAKRVRISITARTKKEAEKFAAILIKVFAELGYNDINVTFDGDTVTVEGQLE`
 
-will perform design of a homo-dimer, starting from the specified sequence.
+will perform design of a homo-dimer, starting from the sequence of [Top7](https://www.rcsb.org/structure/1QYS).
 
 
 ## Outputs
