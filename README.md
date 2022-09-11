@@ -27,15 +27,15 @@ conda env create -f SE3.yml
 
 3. Change the shebang in `./oligomer_hallucination.py` to the location of your conda install.
 ```
-#!/software/conda/envs/SE3/bin/python --> #!/location/of/your/conda/env/bin/python
+sed -i 's/\/software\/conda\/envs\/SE3\/bin\/python/\/path\/to\/your\/conda\/env\/bin\/python/g' oligomer_hallucination.py
 ```
 
 4. Change paths to your AlphaFold2 install in `./modules/af2_net.py` and `./modules/losses.py`
 ```
-sys.path.append('/projects/ml/alphafold/alphafold_git/') --> sys.path.append('/location/of/your/alphafold/installation/')
+sed -i 's/\/projects\/ml\/alphafold\/alphafold_git\//\/path\/to\/your\/alphafold\/installation\//g' modules/*.py
 ```
 
-5. If using `tmalign` and `dssp` based losses, you will also need to install these packages ([TM-align](https://zhanggroup.org/TM-align/), [DSSP](https://anaconda.org/salilab/dssp)), and update the paths to their executables in `./modules/losses.py`
+5. If using `tmalign` and `dssp` based losses, you will also need to install these packages ([TM-align](https://zhanggroup.org/TM-align/), [DSSP](https://github.com/PDB-REDO/dssp)), and update the paths to their executables in `./modules/losses.py`
 
 
 ## Examples
@@ -213,6 +213,7 @@ This work was made possible by the following separate libraries and packages:
 *   [Scikit-learn](https://scikit-learn.org/stable/)
 *   [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi)
 *	[PSIPRED](http://bioinf.cs.ucl.ac.uk/psipred/)
+*   [DSSP](https://github.com/PDB-REDO/dssp)
 *   [TM-align](https://zhanggroup.org/TM-align/)
 *   [MM-align](https://zhanggroup.org/MM-align/)
 
