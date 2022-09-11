@@ -1,23 +1,35 @@
 ![header](imgs/oligo_hallucination.png)
 
-# Oligomer and multi-state hallucination with AlphaFold2
+# Oligomer hallucination with AlphaFold2
 
-Design (hallucinate) cyclic-symmetric protein assemblies starting from only a specification of their homo-oligomeric valencies.
+Design (hallucinate) cyclic-symmetric protein assemblies starting from only the specification of a homo-oligomeric valency.
 
 Accompanying [oligomer hallucination paper](https://www.biorxiv.org/content/10.1101/2022.06.09.493773v1).
 
 `HAL_design_models` contains models for each design that was experimentally tested.
 
-`HAL_experimental` contains data about each deign that was experimentally tested.
+`HAL_experimental` contains data about each design that was experimentally tested.
 
 The [ProteinMPNN paper](https://www.biorxiv.org/content/10.1101/2022.06.03.494563v1) and [code](https://github.com/dauparas/ProteinMPNN).
 
-## Get started
+## Getting started
+
+1. Clone repo (NB you will also need to have [AlphaFold2](https://github.com/deepmind/alphafold) installed).
+```
+git clone https://github.com/bwicky/oligomer_hallucination
+```
+
+2. Create conda environment using the `SE3.yml` file
+```
+cd oligomer_hallucination
+conda env create -f SE3.yml
+```
 
 
 ## Examples
 
 - `./oligomer_hallucination.py --oligo AAA+ --L 100 --out example`
+
 will perform design of a homo-trimer, with each protomer being composed of 100 amino acids.
 
 - `./oligomer_hallucination.py --oligo AAAAAA+ --L 50 --loss dual_cyclic --out example` 
@@ -31,6 +43,7 @@ will perform design of a monomeric proteins containing eight repeats, each 30 am
 - `./oligomer_hallucination.py --oligo AA+ --seq GDIQVQVNIDDNGKNFDYTYTVTTESELQKVLNELMDYIKKQGAKRVRISITARTKKEAEKFAAILIKVFAELGYNDINVTFDGDTVTVEGQLE`
 
 will perform design of a homo-dimer, starting from the specified sequence.
+
 
 ## Outputs
 
