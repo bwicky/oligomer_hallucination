@@ -30,10 +30,9 @@ conda env create -f SE3.yml
 #!/software/conda/envs/SE3/bin/python --> #!/location/of/your/conda/env/bin/python
 ```
 
-4. Change paths to your AlphaFold2 install in './modules/af2_net.py` and `./modules/losses.py`
+4. Change paths to your AlphaFold2 install in `./modules/af2_net.py` and `./modules/losses.py`
 ```
 sys.path.append('/projects/ml/alphafold/alphafold_git/') --> sys.path.append('/location/of/your/alphafold/installation/')
-
 ```
 
 5. If using `tmalign` and `dssp` based losses, you will also need to install these packages ([TM-align](https://zhanggroup.org/TM-align/), [DSSP](https://anaconda.org/salilab/dssp)), and update the paths to their executables in `./modules/losses.py`
