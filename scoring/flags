@@ -1,0 +1,6 @@
+-beta_nov16
+-overwrite
+-in:ignore_unrecognized_res
+-no_optH False 
+-use_input_sc True
+-holes:dalphaball /software/rosetta/DAlphaBall.gcc

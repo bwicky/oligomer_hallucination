@@ -1,0 +1,146 @@
+<ROSETTASCRIPTS>
+
+<SCOREFXNS> 
+    <ScoreFunction name="standardfxn" weights="beta_nov16"/> 
+
+</SCOREFXNS>
+
+<RESIDUE_SELECTORS> 
+    <True name="everything" />
+
+</RESIDUE_SELECTORS>
+
+<TASKOPERATIONS> 
+    <RestrictToRepacking name="rtr"/>
+    <ExtraRotamersGeneric name="ex1ex2" ex1="1" ex2="1" /> 
+ 
+</TASKOPERATIONS>
+
+<FILTERS> 
+
+    <ScoreType name="score" scorefxn="standardfxn" score_type="total_score" threshold="0.0" confidence="0" />
+    <ResidueCount name="nres" confidence="0" />
+    <CalculatorFilter name="score_res" 
+        confidence="0" equation="SCORE/NRES" threshold="-2.0">
+        <VAR name="SCORE" filter_name="score" />
+        <VAR name="NRES" filter_name="nres" />
+    </CalculatorFilter>
+    
+    <ScoreType name="all_lr_hb_far" scorefxn="standardfxn" score_type="hbond_lr_bb" threshold="0.0" confidence="0" />
+    <CalculatorFilter name="lr_hb_res1" 
+        confidence="0" equation="SCORE/NRES" threshold="-0.35">
+         <VAR name="SCORE" filter_name="all_lr_hb_far" />
+         <VAR name="NRES" filter_name="nres" />
+    </CalculatorFilter>
+
+    <ScoreType name="all_sc_hb_e" scorefxn="standardfxn" score_type="hbond_sc" threshold="0.0" confidence="0" />
+    <CalculatorFilter name="all_sc_hb_e_res" 
+        confidence="0" equation="SCORE/NRES" threshold="-0.35">
+         <VAR name="SCORE" filter_name="all_sc_hb_e" />
+         <VAR name="NRES" filter_name="nres" />
+    </CalculatorFilter>
+
+    <NetCharge name="total_charge" confidence="0" chain="0" /> 0=all chains
+
+    <CavityVolume name="cav_vol" confidence="0" /> 
+
+    <Holes name="holes" confidence="0" threshold="10" exclude_bb_atoms="false" normalize_per_atom="true" />
+
+    <SSShapeComplementarity name="ss_sc" confidence="0" min_sc="0.0" loops="true" helices="true" />
+    <SSShapeComplementarity name="helix_sc" confidence="0" min_sc="0.0" loops="false" helices="true" />
+    <SSShapeComplementarity name="loop_sc" confidence="0" min_sc="0.0" loops="true" helices="false" />
+
+    <TotalSasa name="total_sasa" confidence="0" threshold="0" upper_threshold="1000000000000000" />
+    <TotalSasa name="polar_sasa" confidence="0" threshold="0" upper_threshold="1000000000000000" polar="True" hydrophobic="False" />
+    <TotalSasa name="hydrophobic_sasa" confidence="0" threshold="0" upper_threshold="1000000000000000" polar="False" hydrophobic="True" />
+
+    <SSPrediction name="pre_mismatch_probability" confidence="0" 
+        cmd="/home/bwicky/tools/psipred4/runpsipred_single" use_probability="1" mismatch_probability="1" use_svm="0" />
+    <SSPrediction name="psipred_match" confidence="0" cmd="/home/bwicky/tools/psipred4/runpsipred_single" use_probability="1" mismatch_probability="0" use_svm="0" />
+    <SSPrediction name="psipred_probability" confidence="0" cmd="/home/bwicky/tools/psipred4/runpsipred_single" use_probability="1" mismatch_probability="0" use_svm="0"/> 
+    <SSPrediction name="psipred_mismatch_prob" confidence="0" cmd="/home/bwicky/tools/psipred4/runpsipred_single" use_probability="1" mismatch_probability="1" use_svm="0"/> 
+
+    <Geometry name="nomega_off" confidence="0" omega="174" residue_selector="everything" count_bad_residues="true" /> 
+
+    <BuriedSurfaceArea name="buried_npsa" confidence="0" select_only_FAMILYVW="true" atom_mode="all_atoms"/>
+    
+    <ExposedHydrophobics name="exposed_npsa" confidence="0" sasa_cutoff="0.0" threshold="-1" /> 
+    <ExposedHydrophobics name="exposed_hydrophobics" sasa_cutoff="0.0" threshold="-1" confidence="0"/>
+
+    <PackStat name="packstat" confidence="0" threshold="0.0" chain="0" repeats="10" /> 
+
+</FILTERS>
+
+<SIMPLE_METRICS>
+    <SecondaryStructureMetric name="dssp" dssp_reduced="true"/>
+    <SequenceMetric name="sequence"/>
+    <SasaMetric name="sasa"/>
+    <TotalEnergyMetric name="total_energy"/>
+    <SapScoreMetric name="total_sap_score" /> 
+    <PerResidueSapScoreMetric name="per_res_sap_score" /> 
+
+</SIMPLE_METRICS>
+
+<MOVERS>
+    <ClearConstraintsMover name="clear_all_constraints" /> 
+
+    <MinMover name="min_sc" 
+        scorefxn="standardfxn" chi="true" bb="false" jump="ALL" 
+        cartesian="false" type="dfpmin_armijo_nonmonotone" tolerance="0.00001" max_iter="100000" />
+    <MinMover name="min_all"
+        scorefxn="standardfxn" chi="true" bb="true" jump="ALL" 
+        cartesian="false" type="dfpmin_armijo_nonmonotone" tolerance="0.00001" max_iter="100000" />
+    
+    <RunSimpleMetrics name="secondary_structure" metrics="dssp" />
+    <RunSimpleMetrics name="sasa" metrics="sasa" />
+    <RunSimpleMetrics name="sequence" metrics="sequence" />
+    <RunSimpleMetrics name="total_energy" metrics="total_energy" />
+    <RunSimpleMetrics name="sasa_seq_te" metrics="sasa,sequence,total_energy" />
+
+    <DumpPdb name="dump_pdb" fname="dump" scorefxn="standardfxn" tag_time="1"/>
+
+</MOVERS>
+
+<PROTOCOLS> 
+
+    <Add mover="clear_all_constraints"/> 
+    <Add mover_name="min_sc"/>
+    <Add mover_name="min_all"/>
+    
+    <Add mover_name="secondary_structure"/>
+    <Add mover_name="sasa"/>
+    <Add mover_name="sequence"/>
+    <Add mover_name="total_energy"/>
+    
+    <Add filter="total_charge"/>
+    <Add filter="ss_sc" />
+    <Add filter="helix_sc" />
+    <Add filter="loop_sc" />
+    <Add filter="total_sasa" />
+    <Add filter="polar_sasa" />
+    <Add filter="hydrophobic_sasa" />
+
+    <Add filter_name="holes" />     
+    <Add filter_name="score_res" /> 
+    <Add filter_name="lr_hb_res1" /> 
+    <Add filter_name="all_sc_hb_e_res" /> 
+    
+    <Add filter_name="pre_mismatch_probability" /> 
+    <Add filter_name="psipred_match" />
+    <Add filter_name="psipred_probability" />
+    <Add filter_name="psipred_mismatch_prob" />
+    
+    <Add filter_name="exposed_hydrophobics" />
+    <Add filter_name="packstat" />
+    <Add filter_name="nomega_off" />
+
+    <Add filter_name="buried_npsa" />
+    <Add filter_name="exposed_npsa"/>
+    <Add filter="cav_vol" />
+
+</PROTOCOLS>
+
+<OUTPUT scorefxn="standardfxn"/>
+
+</ROSETTASCRIPTS>
+

@@ -2,13 +2,13 @@
 
 # Oligomer hallucination with AlphaFold2
 
-Design (hallucinate) cyclic-symmetric protein assemblies starting from only the specification of a homo-oligomeric valency.
+Design (*hallucinate*) cyclic-symmetric protein assemblies starting from only the specification of a homo-oligomeric valency.
 
 Accompanying [oligomer hallucination paper](https://www.biorxiv.org/content/10.1101/2022.06.09.493773v1).
 
-`HAL_design_models` contains models for each design that was experimentally tested.
+- `HAL_design_models` contains models for each design that was experimentally tested in the paper.
 
-`HAL_experimental` contains data about each design that was experimentally tested.
+- `HAL_experimental` contains data about each design that was experimentally tested in the paper.
 
 The [ProteinMPNN paper](https://www.biorxiv.org/content/10.1101/2022.06.03.494563v1) and [code](https://github.com/dauparas/ProteinMPNN).
 
@@ -27,43 +27,44 @@ conda env create -f SE3.yml
 
 3. Change the shebang in `./oligomer_hallucination.py` to the location of your conda install.
 ```
-sed -i 's/\/software\/conda\/envs\/SE3\/bin\/python/\/path\/to\/your\/conda\/env\/bin\/python/g' oligomer_hallucination.py
+sed -i 's/\/software\/conda\/envs\/SE3\/bin\/python/<path_to_your_conda_env>/g' oligomer_hallucination.py
 ```
 
 4. Change paths to your AlphaFold2 install in `./modules/af2_net.py` and `./modules/losses.py`
 ```
-sed -i 's/\/projects\/ml\/alphafold\/alphafold_git\//\/path\/to\/your\/alphafold\/installation\//g' ./modules/*.py
+sed -i 's/\/projects\/ml\/alphafold\/alphafold_git\//<path_to_your_alphafol2_install>/g' ./modules/*.py
 ```
 
 5. If using `tmalign` and `dssp` based losses, you will also need to install these packages ([TM-align](https://zhanggroup.org/TM-align/), [DSSP](https://github.com/PDB-REDO/dssp)), and update the paths to their executables in `./modules/losses.py`
 
 ```
 modules/losses.py:    dssp_tuple = dssp_dict_from_pdb_file(pdbfile, DSSP="/home/lmilles/lm_bin/dssp")[0]
-modules/losses.py:        p = subprocess.Popen(f'/home/lmilles/lm_bin/TMalign {template} {temp_pdbfile} | grep -E "RMSD|TM-score=" ', stdout=subprocess.PIPE, shell=True)
-modules/losses.py:        p = subprocess.Popen(f'/home/lmilles/lm_bin/TMalign {template} {temp_pdbfile} -I {force_alignment} | grep -E "RMSD|TM-score=" ', stdout=subprocess.PIPE, shell=True)
+modules/losses.py:    p = subprocess.Popen(f'/home/lmilles/lm_bin/TMalign {template} {temp_pdbfile} | grep -E "RMSD|TM-score=" ', stdout=subprocess.PIPE, shell=True)
+modules/losses.py:    p = subprocess.Popen(f'/home/lmilles/lm_bin/TMalign {template} {temp_pdbfile} -I {force_alignment} | grep -E "RMSD|TM-score=" ', stdout=subprocess.PIPE, shell=True)
 ```
 
 ## Examples
 
 - `./oligomer_hallucination.py --oligo AAA+ --L 100 --out example`
 
-will perform design of a homo-trimer, with each protomer being composed of 100 amino acids.
+will perform design of a *homo-trimer*, with each protomer being composed of 100 amino acids.
 
 - `./oligomer_hallucination.py --oligo AAAAAA+ --L 50 --loss dual_cyclic --out example` 
 
-will perform design of a homo-hexamer, with each protomer being composed of 50 amino acids, and optimising for the `dual_cylic` loss.
+will perform design of a *homo-hexamer*, with each protomer being composed of 50 amino acids, and optimising for the `dual_cylic` loss.
 
-- `./oligomer_hallucination.py --oligo AAAAAAAA+ --L 30 --single_chains` 
+- `./oligomer_hallucination.py --oligo AAAAAAAA+ --L 30 --single_chains -out example` 
 
-will perform design of a monomeric proteins containing eight repeats, each 30 amino acids in length.
+will perform design of a *monomeric* proteins containing *eight repeats*, each 30 amino acids in length.
 
-- `./oligomer_hallucination.py --oligo AA+ --seq GDIQVQVNIDDNGKNFDYTYTVTTESELQKVLNELMDYIKKQGAKRVRISITARTKKEAEKFAAILIKVFAELGYNDINVTFDGDTVTVEGQLE`
+- `./oligomer_hallucination.py --oligo AA+ --seq GDIQVQVNIDDNGKNFDYTYTVTTESELQKVLNELMDYIKKQGAKRVRISITARTKKEAEKFAAILIKVFAELGYNDINVTFDGDTVTVEGQLE --out example`
 
-will perform design of a homo-dimer, starting from the sequence of [Top7](https://www.rcsb.org/structure/1QYS).
+will perform design of a *homo-dimer*, starting from the sequence of [Top7](https://www.rcsb.org/structure/1QYS).
 
 
 ## Outputs
 
+A folder with the name specified by `--out` containing:
 - Structures (`.pdb`) for each accepted move of the MCMC trajectory.
 - A log file (`.out`) containing the scores at each step of the MCMC trajectory (accepted and rejected).
 
@@ -121,10 +122,10 @@ optional arguments:
                         will only mutate the 25% lowest plddt positions (default: random).
   --mutation_method MUTATION_METHOD
                         how to mutate selected positions. Choose from [uniform, frequency_adjusted, blosum62, pssm] (default: frequency_adjusted).
-  --loss LOSS           the loss function used during optimization. Choose from [plddt, ptm, pae, dual, pae_sub_mat, pae_asym, entropy [not working
-                        yet], dual_cyclic, tmalign (requires a --template), dual_tmalign (requires a --template), pae_asym_tmalign [not working yet],
-                        aspect_ratio, frac_dssp or min_frac_dssp (requires a --dssp_fractions_specified), ]. Multiple losses can be combined as a
-                        comma-separarted string of loss_name:args units (and weighed with --loss_weights).
+  --loss LOSS           the loss function used during optimization. Choose from [plddt, ptm, pae, dual, cyclic, dual_cyclic, pae_sub_mat, pae_asym,
+                        tmalign (requires --template), dual_tmalign (requires --template), aspect_ratio, frac_dssp, min_frac_dssp (requires
+                        --dssp_fractions_specified), pae_asym_tmalign (in development), entropy (in development)]. Multiple losses can be combined as
+                        a comma-separarted string of loss_name:args units (and weighed with --loss_weights).
                         loss_0_name::loss0_param0;loss0_param1,loss_1_name::[loss_1_configfile.conf] ... (default: dual).
   --loss_weights LOSS_WEIGHTS
                         if a combination of losses is passed, specify relative weights of each loss to the globabl loss by providing a comma-separated
@@ -146,15 +147,14 @@ optional arguments:
   --msa_clusters MSA_CLUSTERS
                         the number of MSA clusters used during feature generation (?). Larger numbers increase accuracy but significantly affect
                         runtime (default: 1).
-  --output_pae          output the PAE (predicted alignment error) matrix for each accepted step of the MCMC trajectory (default: False).
-  --timestamp           timestamp output directly and every PDB written to disk with: %Y%m%d_%H%M%S_%f (default: False).
-  --template TEMPLATE   template PDB for use with special loss functions (default: None).
+  --output_pae          output the pAE (predicted alignment error) matrix for each accepted step of the MCMC trajectory (default: False).
+  --timestamp           timestamp output and every PDB written to disk with: %Y%m%d_%H%M%S_%f (default: False).
+  --template TEMPLATE   template PDB for use with tmalign-based losses (default: None).
   --dssp_fractions_specified DSSP_FRACTIONS_SPECIFIED
-                        dssp fractions specfied for frac_dssp loss as E(beta sheet),H(alpha helix),notEH (other) e.g. 0.8,None,None will be enforce
-                        80% beta sheet; or 0.5,0,None will enforce 50% beta sheet, no helices (default: None).
+                        dssp fractions specfied for frac_dssp loss as E(beta sheet), H(alpha helix), notEH(other) e.g. 0.8,None,None will enforce 80%
+                        beta sheet; or 0.5,0,None will enforce 50% beta sheet, no helices (default: None).
   --template_alignment TEMPLATE_ALIGNMENT
                         enforce tmalign alignment with fasta file (default: None).
-
 ```
 
 
@@ -208,6 +208,7 @@ This work was made possible by the following separate libraries and packages:
 *	[RosetTTAfold](https://github.com/RosettaCommons/RoseTTAFold)
 *   [ProteinMPNN](https://github.com/dauparas/ProteinMPNN)
 *	[Rosetta](https://www.rosettacommons.org/software)
+*	[PyRosetta](https://www.pyrosetta.org/)
 *   [Biopython](https://biopython.org)
 *   [Matplotlib](https://matplotlib.org/)
 *   [Seaborn](https://seaborn.pydata.org/)

@@ -92,7 +92,8 @@ def get_args():
             default='dual',
             type=str,
             help='the loss function used during optimization. Choose from \
-            [plddt, ptm, pae, dual, pae_sub_mat, pae_asym, entropy [not working yet], dual_cyclic, tmalign (requires a --template), dual_tmalign (requires a --template), pae_asym_tmalign [not working yet], aspect_ratio, frac_dssp or min_frac_dssp (requires a --dssp_fractions_specified),  ].\
+            [plddt, ptm, pae, dual, cyclic, dual_cyclic, pae_sub_mat, pae_asym, tmalign (requires --template), dual_tmalign (requires --template), \
+            aspect_ratio, frac_dssp, min_frac_dssp (requires --dssp_fractions_specified), pae_asym_tmalign (in development), entropy (in development)].\
             Multiple losses can be combined as a comma-separarted string of loss_name:args units (and weighed with --loss_weights).\
             loss_0_name::loss0_param0;loss0_param1,loss_1_name::[loss_1_configfile.conf] ... \
              (default: %(default)s).'
@@ -184,14 +185,14 @@ def get_args():
             '--output_pae',
             default=False,
             action='store_true',
-            help='output the PAE (predicted alignment error) matrix for each accepted step of the MCMC trajectory (default: %(default)s).'
+            help='output the pAE (predicted alignment error) matrix for each accepted step of the MCMC trajectory (default: %(default)s).'
             )
 
     parser.add_argument(
             '--timestamp',
             default=False,
             action='store_true',
-            help='timestamp output directly and every PDB written to disk with: %%Y%%m%%d_%%H%%M%%S_%%f (default: %(default)s).'
+            help='timestamp output and every PDB written to disk with: %%Y%%m%%d_%%H%%M%%S_%%f (default: %(default)s).'
             )
 
     parser.add_argument(
@@ -199,7 +200,7 @@ def get_args():
             default=None,
             type=str,
             action='store',
-            help='template PDB for use with special loss functions (default: %(default)s).'
+            help='template PDB for use with tmalign-based losses (default: %(default)s).'
             )
 
     parser.add_argument(
@@ -207,8 +208,8 @@ def get_args():
             default=None,
             type=str,
             action='store',
-            help='dssp fractions specfied for frac_dssp loss as E(beta sheet),H(alpha helix),notEH (other)\
-            e.g. 0.8,None,None will be enforce 80%% beta sheet; or 0.5,0,None will enforce 50%% beta sheet, no helices (default: %(default)s).'
+            help='dssp fractions specfied for frac_dssp loss as E(beta sheet), H(alpha helix), notEH(other)\
+            e.g. 0.8,None,None will enforce 80%% beta sheet; or 0.5,0,None will enforce 50%% beta sheet, no helices (default: %(default)s).'
             )
 
     parser.add_argument(
