@@ -1,1 +1,1 @@
-Modules used by `oligomer_hallucinatin.py`
+Modules used by `oligomer_hallucination.py`

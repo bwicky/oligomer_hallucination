@@ -8,7 +8,7 @@ Accompanying [oligomer hallucination paper](https://www.biorxiv.org/content/10.1
 
 - `HAL_design_models` contains models for each design that was experimentally tested in the paper.
 
-- `HAL_experimental` contains data about each design that was experimentally tested in the paper.
+- `HAL_experimental_data` contains data about each design that was experimentally tested in the paper.
 
 The [ProteinMPNN paper](https://www.biorxiv.org/content/10.1101/2022.06.03.494563v1) and [code](https://github.com/dauparas/ProteinMPNN).
 
