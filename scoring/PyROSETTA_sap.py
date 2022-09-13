@@ -43,6 +43,5 @@ with open("sap_scores.csv", "w") as wf:
         
         df.loc[len(df.index)] = [ pdb_path, total_sap_score, sap_per_res, no_res ]
 
-
-df = df.sort_values(by=['total_sap_score'], ascending=True)
-df.to_csv("sap_scores_sorted.csv")
+# df = df.sort_values(by=['total_sap_score'], ascending=True)
+# df.to_csv("sap_scores_sorted.csv")

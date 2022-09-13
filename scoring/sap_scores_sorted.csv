@@ -1,6 +1,0 @@
-,pdb,total_sap_score,sap_per_res,no_res
-3,rosetta_min_and_scored_models/HALC1_001_unrelaxed_model_4_ptm_0001.pdb,44.965675354003906,0.6917796208308293,65
-2,rosetta_min_and_scored_models/HALC1_001_unrelaxed_model_3_ptm_0001.pdb,45.831119537353516,0.7050941467285157,65
-1,rosetta_min_and_scored_models/HALC1_001_unrelaxed_model_2_ptm_0001.pdb,47.56107711791992,0.7317088787372296,65
-4,rosetta_min_and_scored_models/HALC1_001_unrelaxed_model_5_ptm_0001.pdb,49.38265609741211,0.759733170729417,65
-0,rosetta_min_and_scored_models/HALC1_001_unrelaxed_model_1_ptm_0001.pdb,70.90986633300781,1.0909210205078126,65

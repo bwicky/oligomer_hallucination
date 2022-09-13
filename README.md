@@ -14,7 +14,7 @@ The [ProteinMPNN paper](https://www.biorxiv.org/content/10.1101/2022.06.03.49456
 
 ## Getting started
 
-1. Clone repo (NB you will also need to have [AlphaFold2](https://github.com/deepmind/alphafold) installed).
+1. Clone repo (*NB* you will also need to have [AlphaFold2](https://github.com/deepmind/alphafold) installed).
 ```
 git clone https://github.com/bwicky/oligomer_hallucination
 ```
@@ -35,7 +35,7 @@ sed -i 's/\/software\/conda\/envs\/SE3\/bin\/python/<path_to_your_conda_env>/g' 
 sed -i 's/\/projects\/ml\/alphafold\/alphafold_git\//<path_to_your_alphafol2_install>/g' ./modules/*.py
 ```
 
-5. If using `tmalign` and `dssp` based losses, you will also need to install these packages ([TM-align](https://zhanggroup.org/TM-align/), [DSSP](https://github.com/PDB-REDO/dssp)), and update the paths to their executables in `./modules/losses.py`
+5. If using `tmalign` and `dssp` based losses, you will also need to install these packages [[TM-align](https://zhanggroup.org/TM-align/), [DSSP](https://github.com/PDB-REDO/dssp)], and update the paths to their executables in `./modules/losses.py`
 
 ```
 modules/losses.py:    dssp_tuple = dssp_dict_from_pdb_file(pdbfile, DSSP="/home/lmilles/lm_bin/dssp")[0]
