@@ -1,6 +1,6 @@
 # Experimental data
 
-`HAL_exp_data.csv` contains all the experimental data collected on designs reported in the [oligomer hallucination paper](200~https://www.biorxiv.org/content/10.1101/2022.06.09.493773v1.full).
+`HAL_exp_data.csv` contains all the experimental data collected on designs reported in the [oligomer hallucination paper](https://www.biorxiv.org/content/10.1101/2022.06.09.493773v1) (*N* = 352).
 
 *NB* for some designs not all entries are populated because they were dropped early in the characterization process due to unfavourable behaviours (e.g.low soluble expression). 
 
@@ -11,6 +11,22 @@ protomer_seq, protomer_length, seq_origin, symmetry,
 pseudo_symmetry, oligomer_length, repeats_per_protomer,
 repeat_length, repeat_seq, repeat_occurs, ID, large_HAL,
 xtal, nsEM, cryoEM, high_res_struct, 
+```
+- Cloning results: 
+```
+eblock, into_plasmid, plasmid_seq, coding_seq, exp_prod,
+exp_prod_length, protomer_mw, e280, OD280, charge@7.4, pI,
+```
+- Wetlab features:
+```
+culture_vol, soluble, sec_column, main_peak, integral,
+nPeaks, monodisperse, CD_conc_mgmL, Kav, obs_mw_sec,
+SECMALS_conc_mgmL, obs_mw_secmals, correct_secmals,
+error_Da_secmals, correct_Vel, Kav_postmelt,
+correct_Vel_postmelt, same_Vel_postmelt, main_peak_postmelt,
+integral_postmelt, nPeaks_postmelt, monodisperse_postmelt,
+tot_sol_yield, tot_sol_yield_per_Leq, oligo_mw,
+log10_oligo_mw
 ```
 - AF2 models and confidence metrics:
 ```
@@ -90,29 +106,13 @@ pident_blast_protomer, evalue_blast_protomer,
 bitscore_blast_protomer, score_blast_protomer,
 qseq_blast_protomer, sseq_blast_protomer, 
 ```
-- TM-align against the PDB results
+- TM-align against the PDB results:
 ```
 tmalign_to, tmscore_design_norm, tmscore_pdb_norm,
 length_pdb, tmaligned_length, tmalign_rmsd, tmalign_seqid,
 ```
-- MM-align against the biounits from the PDB results
+- MM-align against the biounits from the PDB results:
 ```
 mmalign_to, mmscore_design_norm, mmscore_biounit_norm, 
 length_biounit, mmaligned_length, mmalign_rmsd, mmalign_seqid, 
-```
-- Cloning results: 
-```
-eblock, into_plasmid, plasmid_seq, coding_seq, exp_prod,
-exp_prod_length, protomer_mw, e280, OD280, charge@7.4, pI,
-```
-- Wetlab features:
-```
-culture_vol, soluble, sec_column, main_peak, integral,
-nPeaks, monodisperse, CD_conc_mgmL, Kav, obs_mw_sec,
-SECMALS_conc_mgmL, obs_mw_secmals, correct_secmals,
-error_Da_secmals, correct_Vel, Kav_postmelt,
-correct_Vel_postmelt, same_Vel_postmelt, main_peak_postmelt,
-integral_postmelt, nPeaks_postmelt, monodisperse_postmelt,
-tot_sol_yield, tot_sol_yield_per_Leq, oligo_mw,
-log10_oligo_mw
 ```
