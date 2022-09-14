@@ -6,7 +6,7 @@ Design (*hallucinate*) cyclic-symmetric protein assemblies starting from only th
 
 Accompanying [oligomer hallucination paper](https://www.biorxiv.org/content/10.1101/2022.06.09.493773v1).
 
-- `HAL_design_models` contains models for each design that was experimentally tested in the paper.
+- `HAL_design_models.zip` contains models for each design that was experimentally tested in the paper.
 
 - `HAL_experimental_data` contains data about each design that was experimentally tested in the paper.
 
