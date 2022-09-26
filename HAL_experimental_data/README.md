@@ -2,6 +2,8 @@
 
 `HAL_exp_data.csv` contains all the experimental data collected on designs reported in the [oligomer hallucination paper](https://doi.org/10.1126/science.add1964) (*N* = 352).
 
+The complete dataframe that also contains the raw SEC and CD data is available on Zenodo as a `.h5` file [![DOI](https://zenodo.org/badge/533942520.svg)](https://zenodo.org/badge/latestdoi/533942520).
+
 *NB* for some designs not all entries are populated because they were dropped early in the characterization process due to unfavourable behaviours (e.g. low soluble expression). 
 
 The dataframe contains the following features, grouped by categories:
@@ -115,4 +117,17 @@ length_pdb, tmaligned_length, tmalign_rmsd, tmalign_seqid,
 ```
 mmalign_to, mmscore_design_norm, mmscore_biounit_norm, 
 length_biounit, mmaligned_length, mmalign_rmsd, mmalign_seqid, 
+```
+
+- Only available in the `.h5` file (arrays):
+```
+vol, A280, vol_norm, A280_norm, peaks, peak_heights,
+temp, mdeg@222nm, WL,
+mdeg@25C, mdeg@35C, mdeg@45C, mdeg@55C, mdeg@65C,
+mdeg@75C, mdeg@85C, mdeg@95C, mdeg@25C_postmelt,
+vol_postmelt, A280_postmelt,
+MRE@222nm, MRE@25C, MRE@35C, MRE@45C,
+MRE@55C, MRE@65C, MRE@75C, MRE@85C, MRE@95C,
+MRE@25C_postmelt, vol_norm_postmelt, A280_norm_postmelt,
+peaks_postmelt, peak_heights_postmelt,
 ```

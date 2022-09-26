@@ -4,7 +4,7 @@
 
 Design (*hallucinate*) cyclic-symmetric protein assemblies starting from only the specification of a homo-oligomeric valency.
 
-Accompanying [oligomer hallucination paper](https://doi.org/10.1126/science.add1964).
+Accompanying [oligomer hallucination paper](https://doi.org/10.1126/science.add1964) and zenodo archive of the initial release [![DOI](https://zenodo.org/badge/533942520.svg)](https://zenodo.org/badge/latestdoi/533942520).
 
 - `HAL_design_models` contains models for each design that was experimentally tested in the paper.
 
@@ -19,7 +19,7 @@ The [ProteinMPNN paper](https://doi.org/10.1126/science.add2187) and [code](http
 git clone https://github.com/bwicky/oligomer_hallucination
 ```
 
-*NB* all work reported in the [oligomer hallucination paper](https://doi.org/10.1126/science.add1964) was performed with the initial release of [AlphaFold2](https://github.com/deepmind/alphafold) (Jul 15, 2021):
+*NB* all work reported in the [oligomer hallucination paper](https://doi.org/10.1126/science.add1964) was done with the initial release of [AlphaFold2](https://github.com/deepmind/alphafold) (Jul 15, 2021):
 ```
 commit 1109480e6f38d71b3b265a4a25039e51e2343368
 ```
@@ -196,13 +196,13 @@ If you use the code, please cite:
 
 ```bibtex
 @article {HAL2022,
-	author = {Wicky, B. I. M. and Milles, L. F. and Courbet, A. and Ragotte, R. J. and Dauparas, J. and Kinfu, E. and Tipps, S. and Kibler, R. D. and Baek, M. and DiMaio, F. and Li, X. and Carter, L. and Kang, A. and Nguyen, H. and Bera, A. K. and Baker, D.},
-	title = {Hallucinating protein assemblies},
-	year = {2022},
-	doi = {10.1101/2022.06.09.493773},
-	URL = {https://www.biorxiv.org/content/early/2022/06/09/2022.06.09.493773},
-	eprint = {https://www.biorxiv.org/content/early/2022/06/09/2022.06.09.493773.full.pdf},
-	journal = {bioRxiv}
+	author = {B. I. M. Wicky  and L. F. Milles  and A. Courbet  and R. J. Ragotte  and J. Dauparas  and E. Kinfu  and S. Tipps  and R. D. Kibler  and M. Baek  and F. DiMaio  and X. Li  and L. Carter  and A. Kang  and H. Nguyen  and A. K. Bera  and D. Baker },
+	title = {Hallucinating symmetric protein assemblies},
+	journal = {Science},
+	pages = {eadd1964},
+	doi = {10.1126/science.add1964},
+	URL = {https://www.science.org/doi/abs/10.1126/science.add1964},
+}
 ```
 
 ## Acknowledgements
