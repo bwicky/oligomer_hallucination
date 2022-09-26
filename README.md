@@ -4,19 +4,24 @@
 
 Design (*hallucinate*) cyclic-symmetric protein assemblies starting from only the specification of a homo-oligomeric valency.
 
-Accompanying [oligomer hallucination paper](https://www.biorxiv.org/content/10.1101/2022.06.09.493773v1).
+Accompanying [oligomer hallucination paper](https://doi.org/10.1126/science.add1964).
 
-- `HAL_design_models.zip` contains models for each design that was experimentally tested in the paper.
+- `HAL_design_models` contains models for each design that was experimentally tested in the paper.
 
 - `HAL_experimental_data` contains data about each design that was experimentally tested in the paper.
 
-The [ProteinMPNN paper](https://www.biorxiv.org/content/10.1101/2022.06.03.494563v1) and [code](https://github.com/dauparas/ProteinMPNN).
+The [ProteinMPNN paper](https://doi.org/10.1126/science.add2187) and [code](https://github.com/dauparas/ProteinMPNN).
 
 ## Getting started
 
 1. Clone repo (*NB* you will also need to have [AlphaFold2](https://github.com/deepmind/alphafold) installed).
 ```
 git clone https://github.com/bwicky/oligomer_hallucination
+```
+
+*NB* all work reported in the [oligomer hallucination paper](https://doi.org/10.1126/science.add1964) was performed with the initial release of [AlphaFold2](https://github.com/deepmind/alphafold) (Jul 15, 2021):
+```
+commit 1109480e6f38d71b3b265a4a25039e51e2343368
 ```
 
 2. Create conda environment using the `SE3.yml` file.

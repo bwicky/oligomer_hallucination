@@ -1,6 +1,6 @@
 # Experimental data
 
-`HAL_exp_data.csv` contains all the experimental data collected on designs reported in the [oligomer hallucination paper](https://www.biorxiv.org/content/10.1101/2022.06.09.493773v1) (*N* = 352).
+`HAL_exp_data.csv` contains all the experimental data collected on designs reported in the [oligomer hallucination paper](https://doi.org/10.1126/science.add1964) (*N* = 352).
 
 *NB* for some designs not all entries are populated because they were dropped early in the characterization process due to unfavourable behaviours (e.g. low soluble expression). 
 
