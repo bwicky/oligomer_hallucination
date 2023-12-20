@@ -43,13 +43,13 @@ class Protomers:
         self.position_weights = {}
         if sequences is None:
             for z in list(zip(unique_protomers, lengths)):
-                self.init_sequences[z[0]] = ''.join(np.random.choice(list(AA_freq.keys()), size=z[1], p=list(AA_freq.values())))
+                self.init_sequences[z[0]] = ''.join(np.random.choice(list(aa_freq.keys()), size=z[1], p=list(aa_freq.values())))
                 self.position_weights[z[0]] = np.ones(z[1]) / z[1]
 
         else:
             for p, proto in enumerate(unique_protomers):
                 if sequences[p] == '': # empty sequence
-                    self.init_sequences[proto] = ''.join(np.random.choice(list(AA_freq.keys()), size=lengths[p], p=list(AA_freq.values())))
+                    self.init_sequences[proto] = ''.join(np.random.choice(list(aa_freq.keys()), size=lengths[p], p=list(aa_freq.values())))
                     self.position_weights[proto] = np.ones(lengths[p]) / lengths[p]
 
                 else:
@@ -157,7 +157,7 @@ class Oligomer:
 
 # Amino-acid frequencies taken from background frequencies of BLOSUM62.
 # Data from https://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/lxr/source/src/algo/blast/composition_adjustment/matrix_frequency_data.c
-AA_freq = {'A': 0.07421620506799341,
+AA_FREQ = {'A': 0.07421620506799341,
  'R': 0.05161448614128464,
  'N': 0.044645808512757915,
  'D': 0.05362600083855441,
@@ -205,7 +205,8 @@ def main():
     print(f'> At each step, selected positions will be mutated based on {args.mutation_method}.')
     print(f'> Predictions will be performed with AlphaFold2 model_{args.model}_ptm, with recyling set to {args.recycles}, and {args.msa_clusters} MSA cluster(s).')
     print(f'> The loss function used during optimisation was set to: {args.loss}, with respective weights: {args.loss_weights}.')
-
+    
+    AA_freq=copy.deepcopy(AA_FREQ)
     for aa in args.exclude_AA:
         del AA_freq[aa]
 

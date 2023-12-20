@@ -133,7 +133,7 @@ def amber_relax(unrelaxed_protein):
     start = timer()
     amber_relaxer = relax.AmberRelaxation(max_iterations=0,tolerance=2.39,
                                             stiffness=10.0,exclude_residues=[],
-                                            max_outer_iterations=20)
+                                            max_outer_iterations=20, use_gpu=False)
     relaxed_protein, _, _ = amber_relaxer.process(prot=unrelaxed_protein)
     end = timer()
 
