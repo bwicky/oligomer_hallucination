@@ -7,9 +7,14 @@ from jax.lib import xla_bridge
 print(xla_bridge.get_backend().platform)
 
 # AF2-specific libraries
-sys.path.append('/projects/ml/alphafold/alphafold_git/')
+try:
+    import alphafold
+except:
+    # change this to your local clone
+    sys.path.append('/projects/ml/alphafold/alphafold_git/')
 from alphafold.common import protein
 from alphafold.data import pipeline, templates
+from alphafold.data.parsers import Msa
 from alphafold.model import data, config, model
 from alphafold.relax import relax
 
@@ -89,8 +94,9 @@ def predict_structure(oligo_object,
         **pipeline.make_sequence_features(sequence=query_sequence,
                                           description="none",
                                           num_res=len(query_sequence)),
-        **pipeline.make_msa_features(msas=[[query_sequence]],
-                                     deletion_matrices=[[[0]*len(query_sequence)]]),
+        **pipeline.make_msa_features([Msa(sequences=[query_sequence],
+                                     deletion_matrix=[[0]*len(query_sequence)],
+                                     descriptions=["none"])]),
         **mk_mock_template(query_sequence)
     }
 
@@ -110,7 +116,7 @@ def predict_structure(oligo_object,
     # Run AlphaFold2 prediction.
     start = timer()
     processed_feature_dict = model_runner.process_features(feature_dict, random_seed=random_seed)
-    prediction_results = model_runner.predict(processed_feature_dict)
+    prediction_results = model_runner.predict(processed_feature_dict, random_seed=random_seed)
     unrelaxed_protein = protein.from_prediction(processed_feature_dict, prediction_results)
     end = timer()
     # scale pLDDT to be between 0 and 1
@@ -127,7 +133,7 @@ def amber_relax(unrelaxed_protein):
     start = timer()
     amber_relaxer = relax.AmberRelaxation(max_iterations=0,tolerance=2.39,
                                             stiffness=10.0,exclude_residues=[],
-                                            max_outer_iterations=20)
+                                            max_outer_iterations=20, use_gpu=False)
     relaxed_protein, _, _ = amber_relaxer.process(prot=unrelaxed_protein)
     end = timer()
 
